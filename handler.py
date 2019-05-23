@@ -2,6 +2,7 @@ import json
 import libs.bibleFinder as bf
 from urllib.parse import unquote
 from libs.htmlMaker import makeTr
+from libs.htmlMaker import makeTable
 
 
 def findSingle(event, context):
@@ -31,5 +32,35 @@ def findSingleXml(event, context):
     response = {
         "statusCode": 200,
         "body": "<html><body>{} {}</body></html>".format(index, result['text'])
+    }
+    return response
+
+def findBetween(event, context):
+    queryStringParameters = event['queryStringParameters']
+
+    book = queryStringParameters['book']
+    chapter = queryStringParameters['chapter']
+    verseFrom = queryStringParameters['verseFrom']
+    verseTo = queryStringParameters['verseTo']
+    verses = bf.findBetween(book, int(chapter), int(verseFrom), int(verseTo))
+
+    response = {
+        "statusCode": 200,
+        "body": json.dumps(verses)
+    }
+    return response
+
+
+def findBetweenXml(event, context):
+    queryStringParameters = event['queryStringParameters']
+
+    book = queryStringParameters['book']
+    chapter = queryStringParameters['chapter']
+    verseFrom = queryStringParameters['verseFrom']
+    verseTo = queryStringParameters['verseTo']
+    verses = bf.findBetween(book, int(chapter), int(verseFrom), int(verseTo))
+    response = {
+        "statusCode": 200,
+        "body": makeTable(verses)
     }
     return response
