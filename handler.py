@@ -4,6 +4,8 @@ from urllib.parse import unquote
 from libs.htmlMaker import makeTr
 from libs.htmlMaker import makeTable
 
+# sls 배포
+# sls deploy --stage prod --aws-profile matprod --profile matprod
 
 def findSingle(event, context):
     addr = unquote(event['pathParameters']['addr'])
