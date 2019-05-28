@@ -60,6 +60,7 @@ functions:
       - http:
           path: v1/find/single/xml/{addr}
           method: get
+          cors: true
           request:
             parameters:
               paths:
@@ -70,12 +71,14 @@ functions:
       - http:
           path: v1/find/between
           method: get
+          cors: true
   findBetweenXml:
     handler: handler.findBetweenXml
     events:
       - http:
           path: v1/find/between/xml
           method: get
+          cors: true
 #      - schedule: rate(10 minutes)
 
 #    Define function environment variables here
