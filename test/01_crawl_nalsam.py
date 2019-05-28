@@ -8,6 +8,7 @@ pageString = crawl(url)
 def parse(pageString):
     result = {}
     bsObj = BeautifulSoup(pageString, "html.parser")
+    # print(bsObj)
 
     qtDayText2 = bsObj.find("div", {"id":"qtDay"})
     result['qtDayText2'] = qtDayText2.text
@@ -15,12 +16,7 @@ def parse(pageString):
     box2Content = bsObj.find("div", {"class":"box2Content"})
     result['box2Content'] = box2Content.text
 
-    try:
-        script = bsObj.find("div", {"class":"script"})
-        result['srcipt'] = script.text
-    except Exception as e:
-        print(e)
-
+    result['srcipt'] = script.text
 
     content = bsObj.find("div", {"id":"content"})
     ps = content.findAll("p")
