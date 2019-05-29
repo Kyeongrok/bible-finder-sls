@@ -33,6 +33,10 @@ def findSingleXml(event, context):
     index = "{}{}:{}".format(result['shortendBookName'], result['chapter'], result['verse'])
     response = {
         "statusCode": 200,
+        "headers":{
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Credentials': True
+        },
         "body": "<html><body>{} {}</body></html>".format(index, result['text'])
     }
     return response
@@ -48,6 +52,10 @@ def findBetween(event, context):
 
     response = {
         "statusCode": 200,
+        "headers":{
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Credentials': True
+        },
         "body": json.dumps(verses)
     }
     return response
@@ -63,6 +71,10 @@ def findBetweenXml(event, context):
     verses = bf.findBetween(book, int(chapter), int(verseFrom), int(verseTo))
     response = {
         "statusCode": 200,
+        "headers":{
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Credentials': True
+        },
         "body": makeTable(verses)
     }
     return response
