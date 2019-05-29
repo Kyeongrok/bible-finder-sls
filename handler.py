@@ -3,6 +3,7 @@ import libs.bibleFinder as bf
 from urllib.parse import unquote
 from libs.htmlMaker import makeTr
 from libs.htmlMaker import makeTable
+import html.parser
 
 # sls 배포
 # sls deploy --stage prod --aws-profile matprod --profile matprod
@@ -29,15 +30,17 @@ def findSingle(event, context):
 def findSingleXml(event, context):
     addr = unquote(event['pathParameters']['addr'])
     result = bf.findByIndex(addr)[0]
+    unescaped = html.unescape(result['text'])
 
     index = "{}{}:{}".format(result['shortendBookName'], result['chapter'], result['verse'])
     response = {
         "statusCode": 200,
         "headers":{
             'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Credentials': True
+            'Access-Control-Allow-Credentials': True,
+            'Content-Type': 'text/html; charset=utf-8'
         },
-        "body": "<html><body>{} {}</body></html>".format(index, result['text'])
+        "body": "<html><body>{} {}</body></html>".format(index, unescaped)
     }
     return response
 
