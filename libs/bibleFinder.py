@@ -9,6 +9,7 @@ def findByIndex(index):
     result = list(filter(lambda x: x['index']==index, bible))
     return result
 
+
 def findBetween(shortendBookName, chapter, verseFrom, verseTo):
     result = list(filter(lambda x: (x['shortendBookName']==shortendBookName
                          and x['chapter'] == chapter
@@ -18,3 +19,9 @@ def findBetween(shortendBookName, chapter, verseFrom, verseTo):
                          , bible))
     return result
 
+def findByChapter(shortendBookName, chapter):
+    result = list(filter(lambda x: (x['shortendBookName']==shortendBookName
+                                    and x['chapter'] == chapter
+                                    )
+                         , bible))
+    return result

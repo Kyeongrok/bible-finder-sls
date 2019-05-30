@@ -63,6 +63,26 @@ def findBetween(event, context):
     }
     return response
 
+def makeRessponse(jsonContent):
+    response = {
+        "statusCode": 200,
+        "headers":{
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Credentials': True
+        },
+        "body": json.dumps(jsonContent)
+    }
+    return response
+
+def getChapter(event, context):
+    queryStringParameters = event['queryStringParameters']
+
+    book = queryStringParameters['book']
+    chapter = queryStringParameters['chapter']
+    result = bf.findByChapter(book, int(chapter))
+
+    return makeRessponse(result)
+
 
 def findBetweenXml(event, context):
     queryStringParameters = event['queryStringParameters']
