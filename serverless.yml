@@ -74,6 +74,11 @@ functions:
           cors: true
   findBetweenXml:
     handler: handler.findBetweenXml
+    events:
+      - http:
+          path: v1/find/between/xml
+          method: get
+          cors: true
   findChapter:
     handler: handler.getChapter
     events:
