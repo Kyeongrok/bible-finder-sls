@@ -5,6 +5,7 @@ from libs.htmlMaker import makeTr
 from libs.htmlMaker import makeTable
 import html.parser
 
+
 # sls 배포
 # sls deploy --stage prod --aws-profile matprod --profile matprod
 
@@ -99,5 +100,23 @@ def findBetweenXml(event, context):
             'Access-Control-Allow-Credentials': True
         },
         "body": makeTable(verses)
+    }
+    return response
+
+# https://jxkjd9ecxh.execute-api.ap-northeast-2.amazonaws.com/dev/v1/find/election21/full
+def findElection21Full(event, context):
+    # queryStringParameters = event['queryStringParameters']
+    # queryString can be used after
+    file = open('./static/election21.json')
+    list = json.loads(file.read())
+    # temporary select top 100 because lambda memory is low
+    response = {
+        "statusCode": 200,
+        "headers": {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Credentials': True,
+            'Content-Type': 'text/html; charset=utf-8'
+        },
+        "body": str(list[:9000])
     }
     return response
