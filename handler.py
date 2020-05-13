@@ -105,7 +105,9 @@ def findBetweenXml(event, context):
 
 # https://jxkjd9ecxh.execute-api.ap-northeast-2.amazonaws.com/dev/v1/find/election21/full
 def findElection21Full(event, context):
-    # queryStringParameters = event['queryStringParameters']
+    queryStringParameters = event['queryStringParameters']
+    q_from = queryStringParameters['from']
+    q_to = queryStringParameters['to']
     # queryString can be used after
     file = open('./static/election21.json')
     list = json.loads(file.read())
@@ -117,6 +119,6 @@ def findElection21Full(event, context):
             'Access-Control-Allow-Credentials': True,
             'Content-Type': 'text/html; charset=utf-8'
         },
-        "body": str(list[:9000])
+        "body": str(list[int(q_from):int(q_to)])
     }
     return response

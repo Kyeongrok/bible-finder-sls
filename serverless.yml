@@ -96,6 +96,9 @@ functions:
           path: v1/find/election21/full
           method: get
           cors: true
+          request:
+            template:
+              application/json: '{ "foo" : "$input.params(''bar'')" }'
 #      - schedule: rate(10 minutes)
 
 #    Define function environment variables here
