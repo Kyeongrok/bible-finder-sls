@@ -117,8 +117,8 @@ def findElection21Full(event, context):
         "headers": {
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Credentials': True,
-            'Content-Type': 'text/html; charset=utf-8'
+            'Content-Type': 'application/json; charset=utf-8'
         },
-        "body": str(list[int(q_from):int(q_to)])
+        "body": json.dumps(list[int(q_from):int(q_to)])
     }
     return response
