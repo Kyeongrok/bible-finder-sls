@@ -119,6 +119,9 @@ def findElection21Full(event, context):
             'Access-Control-Allow-Credentials': True,
             'Content-Type': 'application/json; charset=utf-8'
         },
-        "body": json.dumps(list[int(q_from):int(q_to)])
+        "body": json.dumps({
+            "data":list[int(q_from):int(q_to)],
+            "paging":{"total":len(list)}
+        })
     }
     return response
