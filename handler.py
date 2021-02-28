@@ -14,6 +14,11 @@ def findSingle(event, context):
     result = bf.findByIndex(addr)
     response = {
         "statusCode": 200,
+        "headers":{
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Credentials': True,
+            'Content-Type': 'text/html; charset=utf-8'
+        },
         "body": json.dumps(result)
     }
     return response
