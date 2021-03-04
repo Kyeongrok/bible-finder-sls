@@ -1,7 +1,7 @@
 import json, re, os
 
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
-file = open(ROOT_DIR + "/gaeLines.json")
+file = open(ROOT_DIR + "/tree_gae.json")
 bible = json.loads(file.read())
 
 def parse_index(string):
@@ -15,8 +15,9 @@ def findByIndex(index):
     st_book_nm, chapter, verse = parse_index(index)
     idx = f'{st_book_nm}{chapter}:{verse}'
 
-    print(idx)
-    result = list(filter(lambda x: x['index']==idx, bible))
+    # print(idx)
+    result = {'shortendBookName':st_book_nm, 'chapter':chapter,
+     'verse':verse, 'text':bible[st_book_nm][chapter][verse]}
     return result
 
 
