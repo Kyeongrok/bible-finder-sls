@@ -1,12 +1,22 @@
-import json
+import json, re, os
 
-import os
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 file = open(ROOT_DIR + "/gaeLines.json")
 bible = json.loads(file.read())
 
+def parse_index(string):
+    st_book_nm = re.compile('[가-힣]{1,2}').findall(string)[0]
+    r2 = re.compile('[0-9].+').findall(string)[0].split(':')
+    chapter = r2[0]
+    verse = r2[1]
+    return st_book_nm, chapter, verse
+
 def findByIndex(index):
-    result = list(filter(lambda x: x['index']==index, bible))
+    st_book_nm, chapter, verse = parse_index(index)
+    idx = f'{st_book_nm}{chapter}:{verse}'
+
+    print(idx)
+    result = list(filter(lambda x: x['index']==idx, bible))
     return result
 
 
