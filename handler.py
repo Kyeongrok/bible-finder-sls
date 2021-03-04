@@ -8,10 +8,7 @@ import html.parser
 
 # sls 배포
 # sls deploy --stage prod --aws-profile matprod --profile matprod
-
-def findSingle(event, context):
-    addr = unquote(event['pathParameters']['addr'])
-    result = bf.findByIndex(addr)
+def wrap(result):
     response = {
         "statusCode": 200,
         "headers":{
@@ -31,6 +28,12 @@ def findSingle(event, context):
         "event": event
     }
     """
+
+def findSingle(event, context):
+    addr = unquote(event['pathParameters']['addr'])
+    result = bf.findByIndex(addr)
+    return wrap(result)
+
 
 
 def findSingleXml(event, context):
