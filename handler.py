@@ -38,7 +38,7 @@ def findSingle(event, context):
 
 def findSingleXml(event, context):
     addr = unquote(event['pathParameters']['addr'])
-    result = bf.findByIndex(addr)[0]
+    result = bf.findByIndex(addr)
     unescaped = html.unescape(result['text'])
 
     index = "{}{}:{}".format(result['shortendBookName'], result['chapter'], result['verse'])
