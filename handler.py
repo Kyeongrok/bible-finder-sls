@@ -1,11 +1,13 @@
 import json
 import libs.bibleFinder as bf
+from libs.bibleFinder import parse_index
 import libs.bible_dao as bdao
 from urllib.parse import unquote
 from libs.htmlMaker import makeTr
 from libs.htmlMaker import makeTable
 import html.parser
 
+dao = bdao.BibleDao('PRD')
 
 # sls 배포
 # sls deploy --stage prod --aws-profile matprod --profile matprod
@@ -36,11 +38,11 @@ def findSingle(event, context):
     return wrap(result)
 
 def find_single_fr_db(event, context):
-
-    return wrap({})
-
-    
-
+    addr = unquote(event['pathParameters']['addr'])
+    st_book_nm, chapter, verse = parse_index(addr)
+    chapter = f'{st_book_nm}{chapter}'
+    r = dao.read_rows('Book', {'chapter':chapter, 'verse':1} )
+    return wrap(json.loads(r))
 
 def findSingleXml(event, context):
     addr = unquote(event['pathParameters']['addr'])

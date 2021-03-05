@@ -1,4 +1,14 @@
-import boto3, time, re
+import boto3, time, re, json, decimal
+from boto3.dynamodb.conditions import Key
+
+class DecimalEncoder(json.JSONEncoder):
+    def default(self, o):
+        if isinstance(o, decimal.Decimal):
+            if o % 1 > 0:
+                return float(o)
+            else:
+                return int(o)
+        return super(DecimalEncoder, self).default(o)
 
 class BibleDao:
     def __init__(self, mode='DEV'):
@@ -27,7 +37,10 @@ class BibleDao:
 
         try:
             r = table.get_item(Key=q)
-            return r['Item']
+            item = r['Item']
+            item['shortenedBookName'] = f"{item['chapter']}:{item['verse']}"
+            item['index'] = f"{item['chapter']}:{item['verse']}"
+            return json.dumps(item, cls=DecimalEncoder)
         except Exception as e:
             print(e.response['Error']['Message'])
 
@@ -46,6 +59,8 @@ if __name__ == '__main__':
         'verse':2,
         'text':'bye'
     }
-    print(dao.read_rows('Book', {'chapter':'창1', 'verse':1} ))
+    r = dao.read_rows('Book', {'chapter':'창1', 'verse':1} )
+    # print(dao.find_by_chapter('창1'))
+    print(r)
     
 
