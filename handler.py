@@ -41,7 +41,7 @@ def find_single_fr_db(event, context):
     addr = unquote(event['pathParameters']['addr'])
     st_book_nm, chapter, verse = parse_index(addr)
     chapter = f'{st_book_nm}{chapter}'
-    r = dao.read_rows('Book', {'chapter':chapter, 'verse':1} )
+    r = dao.read_rows('Book', {'chapter':chapter, 'verse':int(verse)} )
     return wrap(json.loads(r))
 
 def findSingleXml(event, context):
