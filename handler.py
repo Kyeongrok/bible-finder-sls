@@ -1,5 +1,6 @@
 import json
 import libs.bibleFinder as bf
+import libs.bible_dao as bdao
 from urllib.parse import unquote
 from libs.htmlMaker import makeTr
 from libs.htmlMaker import makeTable
@@ -34,6 +35,11 @@ def findSingle(event, context):
     result = bf.findByIndex(addr)
     return wrap(result)
 
+def find_single_fr_db(event, context):
+
+    return wrap({})
+
+    
 
 
 def findSingleXml(event, context):
