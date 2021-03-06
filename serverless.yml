@@ -51,6 +51,19 @@ functions:
           path: v1/find/between
           method: get
           cors: true
+
+  findAdmCode:
+    handler: handler.find_admcd
+    events:
+      - http:
+          path: v1/find/admcd/{code}
+          method: get
+          cors: true
+          request:
+            parameters:
+              paths:
+                addr: true
+
   findBetweenXml:
     handler: handler.findBetweenXml
     events:
@@ -66,6 +79,7 @@ functions:
           path: v1/find/chapter
           method: get
           cors: true
+
   findElection21:
     handler: handler.findElection21Full
     events:

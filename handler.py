@@ -44,6 +44,10 @@ def find_single_fr_db(event, context):
     r = dao.read_rows('Book', {'chapter':chapter, 'verse':int(verse)} )
     return wrap(json.loads(r))
 
+def find_admcd(event, context):
+    law_code = unquote(event['pathParameters']['code'])
+    return wrap({'req':law_code})
+
 def findSingleXml(event, context):
     addr = unquote(event['pathParameters']['addr'])
     result = bf.findByIndex(addr)
