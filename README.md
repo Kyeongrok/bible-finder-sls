@@ -1,5 +1,15 @@
 # Serverless로 만든 API Server
 
+## Serverless Framework설치
+
+- npm있으면 설치 할 수 있습니다.
+
+```
+npm install -g serverless
+```
+
+위 명령어로 serverless framework을 먼저 설치 해주세요.
+
 ## sls 배포
 * sls deploy --stage dev
 * sls deploy function -f findSingle
