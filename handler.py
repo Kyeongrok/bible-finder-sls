@@ -72,7 +72,8 @@ def findBetween(event, context):
         "statusCode": 200,
         "headers": {
             'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Credentials': True
+            'Access-Control-Allow-Credentials': True,
+            'Content-Type': 'application/json; charset=utf-8'
         },
         "body": json.dumps(verses)
     }

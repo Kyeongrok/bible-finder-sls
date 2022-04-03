@@ -27,7 +27,7 @@ def findBetween(st_book_nm, chapter: int, verse_from: int, verse_to: int):
     result = []
     filtered_chapter = bible[st_book_nm][str(chapter)]
     for i in range(verse_from, verse_to + 1):
-        form = {'st_book_nm': st_book_nm, 'chapter': chapter, 'verse': i, 'text': filtered_chapter[str(i)]}
+        form = {'st_book_nm': st_book_nm, 'chapter': chapter, 'verse': i, 'index':f'{st_book_nm}{chapter}:{i}', 'text': filtered_chapter[str(i)]}
         result.append(form)
 
     return result
