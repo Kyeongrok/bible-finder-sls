@@ -9,12 +9,13 @@ import html.parser
 
 dao = bdao.BibleDao('PRD')
 
+
 # sls 배포
 # sls deploy --stage prod --aws-profile matprod --profile matprod
 def wrap(result):
     response = {
         "statusCode": 200,
-        "headers":{
+        "headers": {
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Credentials': True,
             'Content-Type': 'text/html; charset=utf-8'
@@ -32,21 +33,25 @@ def wrap(result):
     }
     """
 
+
 def findSingle(event, context):
     addr = unquote(event['pathParameters']['addr'])
     result = bf.findByIndex(addr)
     return wrap(result)
 
+
 def find_single_fr_db(event, context):
     addr = unquote(event['pathParameters']['addr'])
     st_book_nm, chapter, verse = parse_index(addr)
     chapter = f'{st_book_nm}{chapter}'
-    r = dao.read_rows('Book', {'chapter':chapter, 'verse':int(verse)} )
+    r = dao.read_rows('Book', {'chapter': chapter, 'verse': int(verse)})
     return wrap(json.loads(r))
+
 
 def find_admcd(event, context):
     law_code = unquote(event['pathParameters']['code'])
-    return wrap({'req':law_code})
+    return wrap({'req': law_code})
+
 
 def findSingleXml(event, context):
     addr = unquote(event['pathParameters']['addr'])
@@ -56,7 +61,7 @@ def findSingleXml(event, context):
     index = "{}{}:{}".format(result['shortendBookName'], result['chapter'], result['verse'])
     response = {
         "statusCode": 200,
-        "headers":{
+        "headers": {
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Credentials': True,
             'Content-Type': 'text/html; charset=utf-8'
@@ -64,6 +69,7 @@ def findSingleXml(event, context):
         "body": "<html><body>{} {}</body></html>".format(index, unescaped)
     }
     return response
+
 
 def findBetween(event, context):
     queryStringParameters = event['queryStringParameters']
@@ -76,7 +82,7 @@ def findBetween(event, context):
 
     response = {
         "statusCode": 200,
-        "headers":{
+        "headers": {
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Credentials': True
         },
@@ -84,16 +90,18 @@ def findBetween(event, context):
     }
     return response
 
+
 def makeRessponse(jsonContent):
     response = {
         "statusCode": 200,
-        "headers":{
+        "headers": {
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Credentials': True
         },
         "body": json.dumps(jsonContent)
     }
     return response
+
 
 def getChapter(event, context):
     queryStringParameters = event['queryStringParameters']
@@ -115,13 +123,14 @@ def findBetweenXml(event, context):
     verses = bf.findBetween(book, int(chapter), int(verseFrom), int(verseTo))
     response = {
         "statusCode": 200,
-        "headers":{
+        "headers": {
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Credentials': True
         },
         "body": makeTable(verses)
     }
     return response
+
 
 # https://jxkjd9ecxh.execute-api.ap-northeast-2.amazonaws.com/dev/v1/find/election21/full
 def findElection21Full(event, context):
@@ -140,8 +149,8 @@ def findElection21Full(event, context):
             'Content-Type': 'application/json; charset=utf-8'
         },
         "body": json.dumps({
-            "data":list[int(q_from):int(q_to)],
-            "paging":{"total":len(list)}
+            "data": list[int(q_from):int(q_to)],
+            "paging": {"total": len(list)}
         })
     }
     return response
