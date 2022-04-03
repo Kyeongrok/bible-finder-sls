@@ -48,7 +48,7 @@ functions:
     handler: handler.findBetween
     events:
       - http:
-          path: v1/find/between
+          path: v1/bible/between/{addr}
           method: get
           cors: true
 
@@ -60,18 +60,6 @@ functions:
           method: get
           cors: true
 
-  findAdmCode:
-    handler: handler.find_admcd
-    events:
-      - http:
-          path: v1/find/admcd/{code}
-          method: get
-          cors: true
-          request:
-            parameters:
-              paths:
-                addr: true
-
 
   findChapter:
     handler: handler.getChapter
@@ -81,16 +69,6 @@ functions:
           method: get
           cors: true
 
-  findElection21:
-    handler: handler.findElection21Full
-    events:
-      - http:
-          path: v1/find/election21/full
-          method: get
-          cors: true
-          request:
-            template:
-              application/json: '{ "foo" : "$input.params(''bar'')" }'
 #      - schedule: rate(10 minutes)
 
 #    Define function environment variables here

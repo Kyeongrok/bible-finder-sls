@@ -1,4 +1,4 @@
-import json
+import json, re
 import libs.bibleFinder as bf
 from libs.bibleFinder import parse_index
 import libs.bible_dao as bdao
@@ -40,19 +40,6 @@ def findSingle(event, context):
     return wrap(result)
 
 
-def find_single_fr_db(event, context):
-    addr = unquote(event['pathParameters']['addr'])
-    st_book_nm, chapter, verse = parse_index(addr)
-    chapter = f'{st_book_nm}{chapter}'
-    r = dao.read_rows('Book', {'chapter': chapter, 'verse': int(verse)})
-    return wrap(json.loads(r))
-
-
-def find_admcd(event, context):
-    law_code = unquote(event['pathParameters']['code'])
-    return wrap({'req': law_code})
-
-
 def findSingleXml(event, context):
     addr = unquote(event['pathParameters']['addr'])
     result = bf.findByIndex(addr)
@@ -72,12 +59,13 @@ def findSingleXml(event, context):
 
 
 def findBetween(event, context):
-    queryStringParameters = event['queryStringParameters']
+    addr = unquote(event['pathParameters']['addr'])
 
-    book = queryStringParameters['book']
-    chapter = queryStringParameters['chapter']
-    verseFrom = queryStringParameters['verseFrom']
-    verseTo = queryStringParameters['verseTo']
+    #시113:1-2
+    book_chapter, verses = addr.split(':')
+    verseFrom, verseTo = verses.split('-')
+    book = re.search('[가-힣]{1,2}', book_chapter).group(0)
+    chapter = re.search('[0-9]{1,3}', book_chapter).group(0)
     verses = bf.findBetween(book, int(chapter), int(verseFrom), int(verseTo))
 
     response = {
@@ -121,6 +109,13 @@ def find_between_xml(event, context):
     }
     return response
 
+
+def find_single_fr_db(event, context):
+    addr = unquote(event['pathParameters']['addr'])
+    st_book_nm, chapter, verse = parse_index(addr)
+    chapter = f'{st_book_nm}{chapter}'
+    r = dao.read_rows('Book', {'chapter': chapter, 'verse': int(verse)})
+    return wrap(json.loads(r))
 
 def getChapter(event, context):
     queryStringParameters = event['queryStringParameters']
