@@ -52,6 +52,14 @@ functions:
           method: get
           cors: true
 
+  findBetweenXml:
+    handler: handler.find_between_xml
+    events:
+      - http:
+          path: v1/bible/between/xml
+          method: get
+          cors: true
+
   findAdmCode:
     handler: handler.find_admcd
     events:
@@ -64,13 +72,6 @@ functions:
               paths:
                 addr: true
 
-  findBetweenXml:
-    handler: handler.findBetweenXml
-    events:
-      - http:
-          path: v1/find/between/xml
-          method: get
-          cors: true
 
   findChapter:
     handler: handler.getChapter

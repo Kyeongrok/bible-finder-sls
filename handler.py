@@ -103,24 +103,14 @@ def makeRessponse(jsonContent):
     return response
 
 
-def getChapter(event, context):
+def find_between_xml(event, context):
     queryStringParameters = event['queryStringParameters']
 
     book = queryStringParameters['book']
     chapter = queryStringParameters['chapter']
-    result = bf.findByChapter(book, int(chapter))
-
-    return makeRessponse(result)
-
-
-def findBetweenXml(event, context):
-    queryStringParameters = event['queryStringParameters']
-
-    book = queryStringParameters['book']
-    chapter = queryStringParameters['chapter']
-    verseFrom = queryStringParameters['verseFrom']
-    verseTo = queryStringParameters['verseTo']
-    verses = bf.findBetween(book, int(chapter), int(verseFrom), int(verseTo))
+    verse_from = queryStringParameters['verseFrom']
+    verse_to = queryStringParameters['verseTo']
+    verses = bf.findBetween(book, int(chapter), int(verse_from), int(verse_to))
     response = {
         "statusCode": 200,
         "headers": {
@@ -131,6 +121,15 @@ def findBetweenXml(event, context):
     }
     return response
 
+
+def getChapter(event, context):
+    queryStringParameters = event['queryStringParameters']
+
+    book = queryStringParameters['book']
+    chapter = queryStringParameters['chapter']
+    result = bf.findByChapter(book, int(chapter))
+
+    return makeRessponse(result)
 
 # https://jxkjd9ecxh.execute-api.ap-northeast-2.amazonaws.com/dev/v1/find/election21/full
 def findElection21Full(event, context):
