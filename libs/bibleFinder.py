@@ -18,7 +18,7 @@ def findByIndex(index):
     idx = f'{st_book_nm}{chapter}:{verse}'
 
     # print(idx)
-    result = {'shortendBookName': st_book_nm, 'chapter': chapter,
+    result = {'st_book_nm': st_book_nm, 'chapter': chapter,
               'verse': verse, 'text': bible[st_book_nm][chapter][verse]}
     return result
 

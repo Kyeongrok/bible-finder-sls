@@ -1,5 +1,5 @@
 def makeTr(verse):
-    index = "{}{}:{}".format(verse['shortendBookName'], verse['chapter'], verse['verse'])
+    index = "{}{}:{}".format(verse['st_book_nm'], verse['chapter'], verse['verse'])
     return "<tr><td>{}</td><td>{}</td></tr>".format(index, verse['text'])
 
 
