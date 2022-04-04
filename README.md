@@ -25,6 +25,19 @@ aws configure
 * sls deploy --stage dev
 * sls deploy function -f findBetween --stage dev
 
+### 배포 후 test
+* sls invoke -f hello --log
+
+### local test
+* sls invoke local -f hello --log
+
+
+### 데이터 넘기기
+* sls invoke -f call-telegram --log -d '{"a":"bar"}'
+
+### 로그 보기
+* sls logs -f hello
+
 ## request요청
 * https://2kstde4150.execute-api.ap-northeast-1.amazonaws.com/dev/v1/find/single/xml/롬5:1
 * https://2kstde4150.execute-api.ap-northeast-1.amazonaws.com/dev/v1/find/single/롬5:1

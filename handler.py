@@ -1,13 +1,11 @@
 import json, re
 import libs.bibleFinder as bf
 from libs.bibleFinder import parse_index
-import libs.bible_dao as bdao
 from urllib.parse import unquote
 from libs.htmlMaker import makeTr
 from libs.htmlMaker import makeTable
 import html.parser
 
-dao = bdao.BibleDao('PRD')
 
 
 # sls 배포
@@ -34,9 +32,13 @@ def wrap(result):
     """
 
 
-def findSingle(event, context):
+def find_single(event, context):
     addr = unquote(event['pathParameters']['addr'])
-    result = bf.findByIndex(addr)
+    result = ""
+    try:
+        result = bf.findByIndex(addr)
+    except Exception as e:
+        result = 'error'
     return wrap(result)
 
 
@@ -115,7 +117,8 @@ def find_single_fr_db(event, context):
     addr = unquote(event['pathParameters']['addr'])
     st_book_nm, chapter, verse = parse_index(addr)
     chapter = f'{st_book_nm}{chapter}'
-    r = dao.read_rows('Book', {'chapter': chapter, 'verse': int(verse)})
+    # r = dao.read_rows('Book', {'chapter': chapter, 'verse': int(verse)})
+    r = ''
     return wrap(json.loads(r))
 
 def getChapter(event, context):
@@ -149,3 +152,6 @@ def findElection21Full(event, context):
         })
     }
     return response
+
+if __name__ == "__main__":
+    find_single({'pathParameters':{'addr':'창1:1'}}, '')

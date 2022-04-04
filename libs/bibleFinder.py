@@ -15,10 +15,9 @@ def parse_index(string):
 
 def findByIndex(index):
     st_book_nm, chapter, verse = parse_index(index)
-    idx = f'{st_book_nm}{chapter}:{verse}'
 
     # print(idx)
-    result = {'st_book_nm': st_book_nm, 'chapter': chapter,
+    result = {'st_book_nm': st_book_nm, 'chapter': chapter, 'index':index,
               'verse': verse, 'text': bible[st_book_nm][chapter][verse]}
     return result
 
